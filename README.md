@@ -1,3 +1,12 @@
+# CardReader Summary
+- This project is to design a Raspberry Pi Zero badge reader to record attendance at meetings.  It uses a picam with the IR filter.
+- The administrator interface is an ad hoc web connection.  THe administrator's phone is used to control the application.
+- The administrator first loads primary keys to the records they wish to associate with the attendees.  These primary keys are entered by QRCode.
+- The administrator then uses the phone UI to set it in read mode.
+- Employees hold their barcode near the reader and a Pi library reads and decodes the barcode.
+
+
+# Procedure
 To install git on the Raspberry Pi:
 >sudo apt install git
 
