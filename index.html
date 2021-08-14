@@ -12,23 +12,28 @@
   </head>
   <body>
     <div class="container">
-      <div class="jumbotron">
-         <h1>Learning Locker Attendance Card Reader</h1>
+      <div class="btn btn-light mt-3 mb-3">
+         <h1 class="display-5">Card Reader UI</h1>
+         <p class="lead">You are connected to the user interface of the
+           Wood River Learning & Development Team's Attendance Tracker.
+         </p>
       </div>
-
       <div class="row">
         <div class="col-12">
-          <button class="btn btn-primary">Download Current Data</button><br/>
+          <button class="btn btn-primary btn-block">Download Current Logged Data</button>
           This will download a CSV file that is formatted for uploading into the STEP application.
         </div>
         <div class="col-12 mt-5">
-          <button class="btn btn-secondary">Upload Employee List</button><br/>
-          The employee list should be a text file of lines that each have a badge number then a space and then their name.  Example:  012345 Mark Moran
+          <button class="btn btn-secondary btn-block">Upload Employee List</button>
+          The employee list should be a text file of lines that each have a badge number then a space and then their name.<br/><code>Example:  012345 Mark Moran</code>
         </div>
         <div class="col-12 mt-5">
-          <h1>Attendance Records</h1>
-          ...
-      </div>
+          <button class="btn btn-secondary btn-block">Manage Associated Guide Items</button>
+          As employees badge in, a log is being created of their attendance against the Guide Items fed into this logging device.  Go here to add or remove the associated guide items.
+        </div>
+        <div class="col-12 mt-5">
+          <DYNAMIC/>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin=$

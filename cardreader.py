@@ -1,6 +1,7 @@
 # Web streaming example
 # Source code from the official PiCamera package
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
+#!/usr/bin/python3
 
 import io
 import picamera
@@ -12,9 +13,11 @@ import os.path
 
 PAGE=""
 
-with open('index.html') as f:
-    PAGE = f.read()
-    f.close
+def GetPage():
+    global PAGE
+    with open('/home/pi/CardReader/index.html') as f:
+        PAGE = f.read()
+        f.close
 
 class StreamingOutput(object):
     def __init__(self):
@@ -40,6 +43,8 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_header('Location', '/index.html')
             self.end_headers()
         elif self.path == '/index.html':
+            GetPage()
+            PAGE.replace('<DYNAMIC/>','<strong>Right Chere!</strong>')
             content = PAGE.encode('utf-8')
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=UTF-8')
@@ -98,15 +103,15 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 
-with picamera.PiCamera(resolution='2592x1944', framerate=15) as camera:
-    output = StreamingOutput()
+#with picamera.PiCamera(resolution='2592x1944', framerate=15) as camera:
+#    output = StreamingOutput()
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-    camera.rotation = 180
-    camera.start_recording(output, format='mjpeg')
-    try:
+#    camera.rotation = 180
+#    camera.start_recording(output, format='mjpeg')
+try:
         address = ('', 80)
         server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
-    finally:
+finally:
         camera.stop_recording()
 
