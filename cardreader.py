@@ -1,6 +1,5 @@
-# Web streaming example
-# Source code from the official PiCamera package
-# http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
+# Web Server
+# 2021 - Sean J. Miller
 #!/usr/bin/python3
 
 import io
@@ -42,7 +41,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_header('Location', '/index')
             self.end_headers()
         elif self.path == '/index':
-            PAGE=GetPage('index.html').replace('<DYNAMIC/>','<strong>This is dynamic content nested in the index.html.</strong>')
+            PAGE=GetPage('index.html').replace('<DYNAMIC/>','<strong>This is content dynamically inserted in the static index.html file.</strong>')
             content = PAGE.encode('utf-8')
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=UTF-8')
@@ -76,9 +75,10 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                     self.wfile.write(frame)
                     self.wfile.write(b'\r\n')
             except Exception as e:
-                logging.warning(
-                    'Removed streaming client %s: %s',
-                    self.client_address, str(e))
+                #logging.warning(
+                #    'Removed streaming client %s: %s',
+                #    self.client_address, str(e))
+                pass
 
         elif self.path == '/still.jpg':
             self.send_response(200)
@@ -98,9 +98,8 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                 self.wfile.write(frame)
                 self.wfile.write(b'\r\n')
             except Exception as e:
-                logging.warning(
-                    'stuff',
-                    self.client_address, str(e))
+                pass
+
         else:
             self.send_error(404)
             self.end_headers()
@@ -115,9 +114,10 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 #    camera.rotation = 180
 #    camera.start_recording(output, format='mjpeg')
 try:
-        address = ('', 80)
+        address = ('', 80) #Port 80 requires running python3 with sudo
         server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
 finally:
-        camera.stop_recording()
+#        camera.stop_recording()
+        quit()
 
