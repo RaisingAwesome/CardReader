@@ -11,13 +11,12 @@ from threading import Condition
 from http import server
 import os.path
 
-PAGE=""
-
-def GetPage():
-    global PAGE
-    with open('/home/pi/CardReader/index.html') as f:
+def GetPage(the_file):
+    PAGE=""
+    with open('/home/pi/CardReader/' + the_file) as f:
         PAGE = f.read()
         f.close
+    return PAGE
 
 class StreamingOutput(object):
     def __init__(self):
@@ -40,11 +39,18 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
             self.send_response(301)
-            self.send_header('Location', '/index.html')
+            self.send_header('Location', '/index')
             self.end_headers()
-        elif self.path == '/index.html':
-            GetPage()
-            PAGE.replace('<DYNAMIC/>','<strong>Right Chere!</strong>')
+        elif self.path == '/index':
+            PAGE=GetPage('index.html').replace('<DYNAMIC/>','<strong>This is dynamic content nested in the index.html.</strong>')
+            content = PAGE.encode('utf-8')
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=UTF-8')
+            self.send_header('Content-Length', len(content))
+            self.end_headers()
+            self.wfile.write(content)
+        elif self.path == '/download':
+            PAGE=GetPage('download.html').replace('<DYNAMIC/>','')
             content = PAGE.encode('utf-8')
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=UTF-8')
